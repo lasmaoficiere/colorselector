@@ -10,20 +10,27 @@ function updateColor(colorSelector) {
 }
 
 const hexcode = document.querySelector(".hexcode");
+const rgbvalue = document.querySelector(".rgbvalue");
+const hslvalue = document.querySelector(".hslvalue");
 colorSelector.addEventListener("input", showHex);
 
 //Show the Hex Code
 function showHex(colorSelector) {
-  hexcode.textContent = colorSelector.target.value;
-}
+  const hexValue = colorSelector.target.value;
 
+  hexcode.textContent = `HEX Code:${hexValue}`;
+  rgbvalue.textContent = `RGB Value:(${hex2rgb(hexValue).r}, ${hex2rgb(hexValue).g}, ${hex2rgb(hexValue).b})`;
+  const red = hex2rgb(hexValue).r;
+  const green = hex2rgb(hexValue).g;
+  const blue = hex2rgb(hexValue).b;
+  hslvalue.textContent = `HSL Value:(${RGBToHSL(red, green, blue).h}%, ${RGBToHSL(red, green, blue).s}%, ${RGBToHSL(red, green, blue).l}%)`;
+}
 //Convert HEX to RGB
 function hex2rgb(showHex) {
   //split the hex code in three substrings
-  const rvalue = showHex.substr(0, 2);
-  const gvalue = showHex.substr(2, 2);
-  const bvalue = showHex.substr(4);
-
+  const rvalue = showHex.substring(1, 3);
+  const gvalue = showHex.substring(3, 5);
+  const bvalue = showHex.substring(5, 7);
   return {
     r: parseInt(rvalue, 16),
     g: parseInt(gvalue, 16),
@@ -31,29 +38,27 @@ function hex2rgb(showHex) {
   };
 }
 
-//Show RGB
-
 //Convert RGB to HSL
-function RGBToHSL(r, g, b) {
+function RGBToHSL(red, green, blue) {
   // Make r, g, and b fractions of 1
-  r /= 255;
-  g /= 255;
-  b /= 255;
+  red /= 255;
+  green /= 255;
+  blue /= 255;
 
-  let min = Math.min(r, g, b),
-    max = Math.max(r, g, b),
+  let min = Math.min(red, green, blue),
+    max = Math.max(red, green, blue),
     h = 0,
     s = 0,
     l = 0;
 
   if (max === min) {
     h = 0;
-  } else if (max === r) {
-    h = 60 * (0 + (g - b) / (max - min));
-  } else if (max === g) {
-    h = 60 * (2 + (b - r) / (max - min));
-  } else if (max === b) {
-    h = 60 * (4 + (r - g) / (max - min));
+  } else if (max === red) {
+    h = 60 * (0 + (green - blue) / (max - min));
+  } else if (max === green) {
+    h = 60 * (2 + (blue - red) / (max - min));
+  } else if (max === blue) {
+    h = 60 * (4 + (red - green) / (max - min));
   }
 
   if (h < 0) {
@@ -69,9 +74,16 @@ function RGBToHSL(r, g, b) {
   }
   s *= 100;
   l *= 100;
-  return "hsl(" + h + "," + s + "%," + l + "%)";
-}
-//console.log(RGBToHSL(48, 149, 167));
 
-//Show HSL
-//colorSelector.addEventListener("input", showHSL);
+  h = Math.round((h * 100) / 100);
+  s = Math.round((s * 100) / 100);
+  l = Math.round((l * 100) / 100);
+
+  return {
+    h,
+    s,
+    l
+  };
+}
+console.log(RGBToHSL(255, 255, 255));
+
