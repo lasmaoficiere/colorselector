@@ -1,0 +1,18 @@
+.colorselect {
+  text-align: center;
+  margin-top: 200px;
+  margin-left: 10px;
+}
+
+.colorbox {
+  width: 100px;
+  height: 100px;
+  border: 1px black solid;
+  margin-left: 10px;
+  margin-top: 10px;
+}
+
+.title {
+  text-align: center;
+  margin-top: 50px;
+}
