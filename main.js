@@ -31,12 +31,6 @@ function hex2rgb(showHex) {
   };
 }
 
-colorSelector.addEventListener("input", showRGB);
-function showRGB(colorSelector) {
-  const hexValue = colorSelector.target.value;
-  const newHex = hexValue.substr(1, hexValue.length);
-  const rgbValue = hex2rgb(newHex);
-}
 //Show RGB
 
 //Convert RGB to HSL
